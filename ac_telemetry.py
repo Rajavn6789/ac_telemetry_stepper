@@ -14,7 +14,9 @@ AC_SERVER_IP = "127.0.0.1"
 AC_SERVER_PORT = 9996
 
 maxG=2
-filter=0.2
+filter=0.1
+
+# lastForce = 0
 
 def sendSignal(opId):
     print("Sending signal: ",opId)
@@ -37,11 +39,15 @@ def formattedForce(value):
      return currentValue
 
 def adruinoWrite(force):
+     # lastForce = force;
+     # force = lastForce + force / 2
      force = round(force, 1)
-     position = force * 1000
+     print(lastForce, force)
+     position = force * 2000
      position = round(position, 1)
      position = str(position) + "\n"
      position = position.encode()
+     
      adruinoSerial.write(position)
     
 def combinedForce(frontalG, verticalG):
@@ -106,12 +112,13 @@ while True:
 
             # Calculate combined force
             combinedForces = combinedForce(accG_vertical, accG_frontal) 
-            print(combinedForces) 
             combinedForces = formattedForce(combinedForces)
-            print(combinedForces)    
+
             # Send to adruino
-            if abs(combinedForces) > 0.2:    
+            if abs(combinedForces) >= 0.1:    
                 adruinoWrite(combinedForces)
+            else:
+                adruinoWrite(0)   
 
     except Exception as e:
         print("Handshake failed", e)
