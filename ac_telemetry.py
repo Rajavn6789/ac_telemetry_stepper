@@ -31,14 +31,14 @@ def extractHandShakeRes(index, res):
     return (carName, driverName)
 
 def formattedForce(value):
-     currentValue= min(max(value,-2),2)
-     currentValue = currentValue * (1 - 0.2)
+     currentValue= min(max(value,-maxG),maxG)
+     currentValue = currentValue * (1 - filter)
      currentValue = round(currentValue * 100)/100
      return currentValue
 
 def adruinoWrite(force):
      force = round(force, 1)
-     position = force * 1000;
+     position = force * 1000
      position = round(position, 1)
      position = str(position) + "\n"
      position = position.encode()
@@ -51,8 +51,7 @@ def combinedForce(frontalG, verticalG):
         netForce =  0
     else:
         resultant = math.hypot(frontalG, verticalG) 
-        netForce = resultant if sum > 0 else -resultant  
-        netForce  = formattedForce(netForce)
+        netForce = resultant if sum > 0 else -resultant 
     return netForce
 
 #Socket connection
@@ -106,8 +105,10 @@ while True:
             accG_frontal = unpackedData[13]
 
             # Calculate combined force
-            combinedForces = combinedForce(accG_vertical, accG_frontal)  
-                
+            combinedForces = combinedForce(accG_vertical, accG_frontal) 
+            print(combinedForces) 
+            combinedForces = formattedForce(combinedForces)
+            print(combinedForces)    
             # Send to adruino
             if abs(combinedForces) > 0.2:    
                 adruinoWrite(combinedForces)
