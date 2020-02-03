@@ -13,10 +13,9 @@ DISMISS = 3
 AC_SERVER_IP = "127.0.0.1"
 AC_SERVER_PORT = 9996
 
-maxG=2
-filter=0.1
-
-# lastForce = 0
+maxG=1
+filter=0.0
+sensitivity=0.2
 
 def sendSignal(opId):
     print("Sending signal: ",opId)
@@ -38,27 +37,25 @@ def formattedForce(value):
      currentValue = round(currentValue * 100)/100
      return currentValue
 
-def adruinoWrite(force):
-     # lastForce = force;
-     # force = lastForce + force / 2
-     force = round(force, 1)
-     print(lastForce, force)
-     position = force * 2000
-     position = round(position, 1)
-     position = str(position) + "\n"
-     position = position.encode()
-     
-     adruinoSerial.write(position)
-    
-def combinedForce(frontalG, verticalG):
-    sum = frontalG + verticalG
-    netForce = 0
-    if(sum == 0):
-        netForce =  0
+def adruinoWrite(accG_frontal, accG_vertical):
+ 
+    if abs(accG_vertical) > sensitivity:
+        sum = accG_frontal + accG_vertical
+        combinedVHForce = math.hypot(accG_frontal, accG_vertical)
+        resultant = combinedVHForce if sum > 0 else -combinedVHForce
+    elif abs(accG_frontal) > sensitivity:
+        resultant = accG_frontal
     else:
-        resultant = math.hypot(frontalG, verticalG) 
-        netForce = resultant if sum > 0 else -resultant 
-    return netForce
+        resultant = 0
+    
+    force = formattedForce(resultant)
+    position = force * 2000
+    position = round(position, 1)
+    position = str(position) + "\n"
+    position = position.encode()
+ 
+    adruinoSerial.write(position)
+    
 
 #Socket connection
 while True:
@@ -84,7 +81,7 @@ while True:
         print("Adruino connection connection failed", e)
         time.sleep(1)
 
-  
+posList = []
 while True:
     try:
         # Send Handshake
@@ -110,15 +107,8 @@ while True:
             accG_vertical = unpackedData[12]
             accG_frontal = unpackedData[13]
 
-            # Calculate combined force
-            combinedForces = combinedForce(accG_vertical, accG_frontal) 
-            combinedForces = formattedForce(combinedForces)
-
             # Send to adruino
-            if abs(combinedForces) >= 0.1:    
-                adruinoWrite(combinedForces)
-            else:
-                adruinoWrite(0)   
+            adruinoWrite(accG_frontal, accG_vertical)
 
     except Exception as e:
         print("Handshake failed", e)

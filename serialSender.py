@@ -5,6 +5,7 @@ import random
 adruinoSerial = serial.Serial("COM9", 115200, timeout=1000)
 time.sleep(2)
 print("Adruino serial connection established")
+posList = []
 
 def adruinoWrite(force):
      force = round(force, 1)
@@ -18,8 +19,11 @@ def adruinoWrite(force):
 while True:
 
      longitudinalG = (round(random.uniform(-2, 2), 1))
-     if(abs(longitudinalG) >= 0.2):
-          adruinoWrite(longitudinalG)
+     posList.append(longitudinalG)
+     if len(posList) > 100000:
+          last = posList.pop()
+          adruinoWrite(last)
+          posList.clear()
 
      # position = adruinoSerial.readline()
      # position = position.decode()  # decode byte string into Unicode  
