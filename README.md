@@ -1,13 +1,13 @@
 ### PC Game Telemetry to Stepper motor feedback
 Receives the G-force details from asseto corsa sim racing game telemetry server and motor translates the gforce change that happens during bumps, acclreation and brakings e.t.c to rotational motion. 
 
-### Parts Used
+### a) Parts Used
 1. NEMA17 5.6 kg-cm Stepper Motor 
 2. TB6600 Stepper Motor Driver
 3. Adruino Uno R3 
 4. AC 240V to DC 5A 12V 60W Power Adapter 
 
-### TB6600 Driver Settings
+### b) TB6600 Driver Settings
 These settings depend on the stepper motor settings
 
 1. SW1 - ON
@@ -22,6 +22,7 @@ These settings depend on the stepper motor settings
  > SW4,SW5,SW6 - current 1A, Peak current 1.2A
  
 
+### c) Architecture
 
 
 
