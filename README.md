@@ -8,6 +8,8 @@ Receives the G-force details from asseto corsa sim racing game telemetry server 
 4. AC 240V to DC 5A 12V 60W Power Adapter 
 
 ### TB6600 Driver Settings
+These settings depend on the stepper motor settings
+
 1. SW1 - ON
 2. SW2 - OFF
 3. SW3 - OFF
