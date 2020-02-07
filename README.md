@@ -16,6 +16,7 @@ Receives the G-force details from asseto corsa sim racing game telemetry server 
 6. SW6 - ON
 
  > SW1,SW2,SW3 - Microstep - 4, puls/rev - 800
+ 
  > SW4,SW5,SW6 - current 1A, Peak current 1.2A
  
 
