@@ -53,7 +53,6 @@ def adruinoWrite(accG_frontal, accG_vertical):
     position = round(position, 1)
     position = str(position) + "\n"
     position = position.encode()
- 
     adruinoSerial.write(position)
     
 
@@ -62,6 +61,7 @@ while True:
     try:
         print("Intializing AC Server connection")
         clientSocket = socket(AF_INET, SOCK_DGRAM)
+        clientSocket.settimeout(5)
         print("AC Server connection established")
         time.sleep(1)
         break
