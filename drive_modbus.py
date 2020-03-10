@@ -35,16 +35,16 @@ def positionControlMode():
     except IOError:
         print("Failed to read from instrument", IOError)        
 
-
-# def logPositionParameters():
-#     try:
-#         print("P1-06", servoDrive.read_register(262)) # P1-06 PElectronic Gear Ratio Numerator
-#         print("P2-23", servoDrive.read_register(535)) # P2-23 Position Instruction Smoothing Function Selection
-#         print("P2-04", servoDrive.read_register(516)) # P2-04 Position Control Feed forward Gain
-#         print("P2-02", servoDrive.read_register(514)) # P2-02 Position Control Proportional Gain
-#     except IOError:
-#         print("Failed to read from instrument", IOError)
-
+'''
+def logPositionParameters():
+    try:
+        print("P1-06", servoDrive.read_register(262)) # P1-06 PElectronic Gear Ratio Numerator
+        print("P2-23", servoDrive.read_register(535)) # P2-23 Position Instruction Smoothing Function Selection
+        print("P2-04", servoDrive.read_register(516)) # P2-04 Position Control Feed forward Gain
+        print("P2-02", servoDrive.read_register(514)) # P2-02 Position Control Proportional Gain
+    except IOError:
+        print("Failed to read from instrument", IOError)
+'''
 
 def servoTuning():
     try:
