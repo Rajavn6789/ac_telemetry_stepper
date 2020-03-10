@@ -18,7 +18,6 @@ def speedControl():
         print("Failed to read from instrument", IOError)
 
 
-
 def parameterInitialize():
     try:
         servoDrive.write_register(2, 1, functioncode=6) # P0-02 Parameter Initialization 
@@ -26,6 +25,7 @@ def parameterInitialize():
         print("Initialization successful")
     except IOError:
         print("Failed to read from instrument", IOError)
+
 
 def positionControlMode():
     try:
@@ -60,8 +60,6 @@ def servoTuning():
         #servoDrive.write_register(516, 200, functioncode=6)
     except IOError:
         print("Failed to write to drive", IOError)
-
-
 
 parameterInitialize()
 time.sleep(1)
