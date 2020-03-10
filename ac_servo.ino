@@ -14,6 +14,8 @@ void setup()
   delay(2000);
   Serial.setTimeout(50);
 }
+
+
 void loop()
 {
   unsigned long currentMillis = millis();
